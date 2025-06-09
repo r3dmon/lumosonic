@@ -1,4 +1,4 @@
-import { ArrowRight, Zap, Volume2, Lightbulb } from 'lucide-react';
+import { ArrowRight, Zap, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function Hero() {
@@ -14,9 +14,9 @@ export function Hero() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-8 animate-fade-in">
           <div className="flex items-center justify-center space-x-4 mb-6">
-            <Volume2 className="h-8 w-8 text-cyan-400 animate-bounce" />
             <div className="h-px w-16 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
             <Lightbulb className="h-8 w-8 text-cyan-400 animate-pulse" />
+            <div className="h-px w-16 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
           </div>
           <p className="text-cyan-400 text-lg font-light tracking-wider">From Sound to Light</p>
         </div>

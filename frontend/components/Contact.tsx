@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -27,21 +27,7 @@ export function Contact() {
               <div className="flex items-center group">
                 <Mail className="h-5 w-5 text-cyan-400 mr-6 group-hover:scale-110 transition-transform duration-300" />
                 <div>
-                  <div className="font-light text-white">hello@craft.studio</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center group">
-                <Phone className="h-5 w-5 text-cyan-400 mr-6 group-hover:scale-110 transition-transform duration-300" />
-                <div>
-                  <div className="font-light text-white">+1 (555) 123-4567</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center group">
-                <MapPin className="h-5 w-5 text-cyan-400 mr-6 group-hover:scale-110 transition-transform duration-300" />
-                <div>
-                  <div className="font-light text-white">Innovation District</div>
+                  <div className="font-light text-white">info@lumosonic.nl</div>
                 </div>
               </div>
             </div>

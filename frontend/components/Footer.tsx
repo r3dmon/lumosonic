@@ -1,4 +1,4 @@
-import { Volume2, Lightbulb } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -7,7 +7,6 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-6">
-              <Volume2 className="h-6 w-6 text-cyan-400 mr-3" />
               <div className="h-px w-8 bg-cyan-400 mr-3" />
               <Lightbulb className="h-6 w-6 text-cyan-400 mr-3" />
               <span className="text-xl font-thin text-white">Craft</span>
