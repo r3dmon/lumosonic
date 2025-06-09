@@ -5,97 +5,83 @@ import { Textarea } from '@/components/ui/textarea';
 
 export function Contact() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-32 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Ready to Get Started?
+        <div className="text-center mb-20">
+          <h2 className="text-4xl sm:text-5xl font-thin text-white mb-6">
+            Connect
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Let's discuss your project and how we can help bring your vision to life
+          <div className="w-24 h-px bg-cyan-400 mx-auto mb-8" />
+          <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto">
+            Ready to begin? Let's create something extraordinary together.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           <div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+            <h3 className="text-2xl font-light text-white mb-8">
               Get in Touch
             </h3>
-            <p className="text-gray-600 mb-8">
-              Ready to transform your business with cutting-edge technology? 
-              We'd love to hear about your project and discuss how we can help.
-            </p>
             
-            <div className="space-y-6">
-              <div className="flex items-center">
-                <Mail className="h-6 w-6 text-blue-600 mr-4" />
+            <div className="space-y-8">
+              <div className="flex items-center group">
+                <Mail className="h-5 w-5 text-cyan-400 mr-6 group-hover:scale-110 transition-transform duration-300" />
                 <div>
-                  <div className="font-medium text-gray-900">Email</div>
-                  <div className="text-gray-600">hello@consultancy.com</div>
+                  <div className="font-light text-white">hello@craft.studio</div>
                 </div>
               </div>
               
-              <div className="flex items-center">
-                <Phone className="h-6 w-6 text-blue-600 mr-4" />
+              <div className="flex items-center group">
+                <Phone className="h-5 w-5 text-cyan-400 mr-6 group-hover:scale-110 transition-transform duration-300" />
                 <div>
-                  <div className="font-medium text-gray-900">Phone</div>
-                  <div className="text-gray-600">+1 (555) 123-4567</div>
+                  <div className="font-light text-white">+1 (555) 123-4567</div>
                 </div>
               </div>
               
-              <div className="flex items-center">
-                <MapPin className="h-6 w-6 text-blue-600 mr-4" />
+              <div className="flex items-center group">
+                <MapPin className="h-5 w-5 text-cyan-400 mr-6 group-hover:scale-110 transition-transform duration-300" />
                 <div>
-                  <div className="font-medium text-gray-900">Office</div>
-                  <div className="text-gray-600">123 Tech Street, Innovation City, IC 12345</div>
+                  <div className="font-light text-white">Innovation District</div>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="bg-gray-50 p-8 rounded-lg">
+          <div className="bg-gray-900/30 backdrop-blur-sm border border-gray-800 p-8">
             <form className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
-                  </label>
-                  <Input id="firstName" placeholder="John" />
+                  <Input 
+                    placeholder="First Name" 
+                    className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-cyan-400 rounded-none"
+                  />
                 </div>
                 <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
-                  </label>
-                  <Input id="lastName" placeholder="Doe" />
+                  <Input 
+                    placeholder="Last Name" 
+                    className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-cyan-400 rounded-none"
+                  />
                 </div>
               </div>
               
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <Input id="email" type="email" placeholder="john@company.com" />
-              </div>
+              <Input 
+                type="email" 
+                placeholder="Email" 
+                className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-cyan-400 rounded-none"
+              />
               
-              <div>
-                <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                  Company
-                </label>
-                <Input id="company" placeholder="Your Company" />
-              </div>
+              <Input 
+                placeholder="Company" 
+                className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-cyan-400 rounded-none"
+              />
               
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <Textarea 
-                  id="message" 
-                  rows={4} 
-                  placeholder="Tell us about your project..."
-                />
-              </div>
+              <Textarea 
+                rows={4} 
+                placeholder="Your vision..."
+                className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-cyan-400 rounded-none resize-none"
+              />
               
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+              <Button className="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-medium py-3 rounded-none transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25">
                 Send Message
                 <Send className="ml-2 h-4 w-4" />
               </Button>
