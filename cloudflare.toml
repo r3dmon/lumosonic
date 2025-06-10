@@ -3,7 +3,8 @@ command = "cd frontend && bun run build"
 publish = "frontend/dist"
 
 [build.environment]
-NODE_VERSION = "18"
+
+zNODE_VERSION = "20"
 BUN_VERSION = "latest"
 
 [site]
