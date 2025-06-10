@@ -1,8 +1,12 @@
+/// <reference types="node" />
 import { defineConfig } from 'vite'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-export default defineConfig({
+
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => ({
+  base: '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname),
@@ -14,8 +18,21 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
-  mode: "development",
   build: {
-    minify: false,
-  }
-})
+    outDir: 'dist',
+    sourcemap: mode === 'development',
+    minify: mode === 'production',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'ui-vendor': ['@radix-ui/react-slot', 'class-variance-authority', 'clsx', 'tailwind-merge'],
+        },
+      },
+    },
+  },
+  server: {
+    port: 3000,
+    strictPort: true,
+  },
+}))
