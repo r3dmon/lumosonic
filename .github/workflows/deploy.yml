@@ -14,21 +14,25 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy to Cloudflare Pages
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: '18'
-          cache: 'npm'
+          bun-version: latest
 
       - name: Install dependencies
-        run: npm ci
+        run: cd frontend && bun install
 
       - name: Build frontend
-        run: npm run build
+        run: cd frontend && bun run build
+        env:
+          VITE_API_URL: ${{ github.ref == 'refs/heads/main' && 'https://api.lumosonic.com' || 'https://api-staging.lumosonic.com' }}
 
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
@@ -37,8 +41,9 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: lumosonic
-          directory: frontend/dist/client
+          directory: frontend/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: '3'
 
       - name: Deploy to Staging
         if: github.ref == 'refs/heads/staging'
@@ -47,5 +52,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: lumosonic-staging
-          directory: frontend/dist/client
+          directory: frontend/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: '3'
