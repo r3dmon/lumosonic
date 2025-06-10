@@ -3,9 +3,11 @@ command = "cd frontend && bun run build"
 publish = "frontend/dist"
 
 [build.environment]
-
-zNODE_VERSION = "20"
+NODE_VERSION = "20"
 BUN_VERSION = "latest"
+
+# Required for Wrangler
+compatibility_date = "2024-02-20"
 
 [site]
 bucket = "frontend/dist"
