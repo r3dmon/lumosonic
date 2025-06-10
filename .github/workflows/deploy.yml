@@ -34,17 +34,6 @@ jobs:
         env:
           VITE_API_URL: ${{ github.ref == 'refs/heads/main' && 'https://api.lumosonic.com' || 'https://api-staging.lumosonic.com' }}
 
-      - name: Deploy to Production
-        if: github.ref == 'refs/heads/main'
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: lumosonic
-          directory: frontend/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: '3'
-
       - name: Deploy to Staging
         if: github.ref == 'refs/heads/staging'
         uses: cloudflare/pages-action@v1
@@ -53,5 +42,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: lumosonic-staging
           directory: frontend/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           wranglerVersion: '3'
