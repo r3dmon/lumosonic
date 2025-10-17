@@ -2,6 +2,10 @@
 
 A modern, minimalist software company website built with React, Vite, and Tailwind CSS.
 
+## Shoaces
+
+add shocase to /frontend/public/showcase.pdf
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v20 or later)
