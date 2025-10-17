@@ -1,117 +1,104 @@
 # Lumosonic
 
-A minimalist portfolio website showcasing digital craftsmanship and excellence with server-side rendering support.
+A modern, minimalist software company website built with React, Vite, and Tailwind CSS.
 
-## Features
+## Prerequisites
 
-- Modern, minimalist design
-- Server-side rendering (SSR) for better SEO and performance
-- Responsive layout
-- Smooth animations
-- Contact form
-- Service showcase
-- Client testimonials
-
-## Tech Stack
-
-- **Backend**: Encore.ts (TypeScript backend framework)
-- **Frontend**: React, TypeScript, Vite, Tailwind CSS
-- **UI Components**: shadcn/ui
-- **Icons**: Lucide React
-- **Deployment**: Cloudflare Pages (frontend) + Encore Cloud (backend)
+- [Node.js](https://nodejs.org/) (v20 or later)
+- [Bun](https://bun.sh/) (latest version)
+- [Docker](https://www.docker.com/) (optional, for containerized development)
 
 ## Development
 
-```bash
-# Install dependencies
-npm install
+### Local Development (Recommended)
 
-# Start backend development server
-encore run
+1. Install dependencies:
+   ```bash
+   cd frontend
+   bun install
+   ```
 
-# Start frontend development server (in another terminal)
-cd frontend
-npm run dev
-```
+2. Start the development server:
+   ```bash
+   bun run dev
+   ```
 
-## Building
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```bash
-# Build frontend for production
-cd frontend
-npm run build
+### Docker Development
 
-# This creates both client and server builds for SSR support
-```
+1. Build the Docker image:
+   ```bash
+   docker build -t lumosonic .
+   ```
 
-## Deployment
+2. Run the container:
+   ```bash
+   docker run -p 3000:3000 lumosonic
+   ```
 
-### Backend (Encore Cloud)
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The backend is automatically deployed using Encore's deployment system:
+### Development Scripts
 
-```bash
-# Deploy to staging
-encore deploy --env=staging
-
-# Deploy to production  
-encore deploy --env=production
-```
-
-### Frontend (Cloudflare Pages)
-
-The frontend is automatically deployed to Cloudflare Pages via GitHub Actions when changes are pushed to the main branch.
-
-#### Setup
-
-1. Create a Cloudflare Pages project
-2. Add the following secrets to your GitHub repository:
-   - `CLOUDFLARE_API_TOKEN`: Your Cloudflare API token with Pages permissions
-   - `CLOUDFLARE_ACCOUNT_ID`: Your Cloudflare account ID
-
-#### Manual Deployment
-
-```bash
-# Build the project
-cd frontend
-npm run build
-
-# Deploy to Cloudflare Pages (requires Wrangler CLI)
-npx wrangler pages publish dist/client --project-name=lumosonic
-```
-
-## Server-Side Rendering
-
-The application supports SSR through the Encore.ts backend:
-
-- **SSR Endpoint**: `/ssr/*path` - Renders pages server-side for better SEO
-- **Static Assets**: `/assets/*path` - Serves built frontend assets
-- **SPA Fallback**: `/` - Serves the main application for client-side routing
-
-The SSR implementation provides:
-- Better SEO with pre-rendered HTML
-- Faster initial page loads
-- Progressive enhancement
-- Graceful fallback to client-side rendering
+- `bun run dev` - Start development server
+- `bun run build` - Build for production
+- `bun run preview` - Preview production build
+- `bun run lint` - Run ESLint
+- `bun run type-check` - Run TypeScript type checking
 
 ## Project Structure
 
 ```
-├── backend/
-│   ├── encore.service.ts  # Encore service definition
-│   ├── ssr.ts            # Server-side rendering endpoint
-│   └── static.ts         # Static asset serving
-├── frontend/
+.
+├── frontend/              # Frontend application
 │   ├── components/       # React components
-│   ├── entry-client.tsx  # Client-side entry point
-│   ├── entry-server.tsx  # Server-side entry point
-│   ├── App.tsx          # Main app component
-│   └── index.css        # Global styles
-├── .github/
-│   └── workflows/       # GitHub Actions
-└── README.md
+│   ├── public/          # Static assets
+│   ├── App.tsx         # Main application component
+│   ├── main.tsx        # Application entry point
+│   └── package.json    # Frontend dependencies
+├── .github/             # GitHub configuration
+├── cloudflare.toml     # Cloudflare Pages configuration
+├── Dockerfile          # Docker configuration
+└── README.md          # Project documentation
 ```
+
+## Deployment
+
+The application is automatically deployed to Cloudflare Pages when changes are pushed to the main branch.
+
+### Build Process
+
+1. The build command `cd frontend && bun run build` is executed
+2. The output directory `frontend/dist` is deployed
+3. Environment variables are injected based on the deployment environment
+
+### Environment Variables
+
+- `VITE_API_URL` - API endpoint URL
+  - Production: `https://api.lumosonic.com`
+  - Staging: `https://api-staging.lumosonic.com`
+
+### Manual Deployment
+
+1. Build the application:
+   ```bash
+   cd frontend
+   bun run build
+   ```
+
+2. Deploy to Cloudflare Pages:
+   - Go to Cloudflare Dashboard
+   - Navigate to Pages
+   - Select your project
+   - Click "Deploy"
+
+## Contributing
+
+1. Create a new branch for your feature
+2. Make your changes
+3. Submit a pull request
 
 ## License
 
-MIT License
+[MIT](LICENSE) 
