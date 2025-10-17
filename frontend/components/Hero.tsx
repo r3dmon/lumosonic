@@ -58,6 +58,7 @@ export function Hero() {
             size="lg" 
             className="border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black bg-black/50 px-8 py-4 rounded-lg transition-all duration-300"
             aria-describedby="explore-work-desc"
+            onClick={() => window.open('/showcase.pdf', '_blank')}
           >
             Explore Work
           </Button>

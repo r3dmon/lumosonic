@@ -1,12 +1,43 @@
-import { Send } from 'lucide-react';
+import { useState } from 'react';
+import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import backend from '~backend/client';
 
 export function Contact() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Form submission logic would go here
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      email: formData.get('email') as string,
+      company: formData.get('company') as string || undefined,
+      message: formData.get('message') as string,
+    };
+
+    try {
+      const response = await backend.web.submit(data);
+      setSubmitStatus('success');
+      setStatusMessage(response.message);
+      e.currentTarget.reset();
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      setSubmitStatus('error');
+      setStatusMessage('Failed to send message. Please try again.');
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -130,13 +161,28 @@ export function Contact() {
               
               <Button 
                 type="submit"
-                className="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25"
+                disabled={isSubmitting}
+                className="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-describedby="submit-desc"
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
                 <Send className="ml-2 h-4 w-4" aria-hidden="true" />
               </Button>
               <span id="submit-desc" className="sr-only">Submit your contact form</span>
+              
+              {submitStatus === 'success' && (
+                <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/50 rounded-lg text-green-400" role="alert">
+                  <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+                  <p className="text-sm">{statusMessage}</p>
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400" role="alert">
+                  <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                  <p className="text-sm">{statusMessage}</p>
+                </div>
+              )}
             </form>
           </div>
         </div>
