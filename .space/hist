@@ -1,0 +1,24 @@
+    1  git log
+    2  git revert b1911a5
+    3  git status
+    4  git push
+    5  cd frontend/
+    6  bun install
+    7  cd ..
+    8  cat README.md 
+    9  tail README.md 
+   10  tail 1 README.md 
+   11  tail -1 README.md 
+   12  tail -1 README.md | bash
+   13  tail -1 README.md 
+   14  cd frontend/
+   15  ls
+   16  ll
+   17  cat ../README.md | grep bun
+   18  bun install
+   19  echo $PATH
+   20  source ~/.bashrc
+   21  bun install
+   22  mkdir .space
+   23  mv .space/ ../
+   24  history > ../.space/hist
