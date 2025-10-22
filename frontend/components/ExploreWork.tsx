@@ -1,22 +1,12 @@
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useEffect, useState } from 'react';
-import backend from '~backend/client';
 
 interface ExploreWorkProps {
   onBack: () => void;
 }
 
 export function ExploreWork({ onBack }: ExploreWorkProps) {
-  const [pdfUrl, setPdfUrl] = useState<string>('');
-
-  useEffect(() => {
-    backend.web.getPDF().then((response) => {
-      setPdfUrl(response.url);
-    }).catch((error) => {
-      console.error('Failed to load PDF:', error);
-    });
-  }, []);
+  const pdfUrl = 'https://example.com/showcase.pdf';
 
   return (
     <div className="min-h-screen bg-black text-white">
