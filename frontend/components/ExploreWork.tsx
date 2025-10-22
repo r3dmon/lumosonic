@@ -6,7 +6,7 @@ interface ExploreWorkProps {
 }
 
 export function ExploreWork({ onBack }: ExploreWorkProps) {
-  const pdfUrl = '/api/showcase/pdf';
+  const pdfUrl = 'https://idealink.us/showcase/lumosonic.pdf';
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -29,20 +29,11 @@ export function ExploreWork({ onBack }: ExploreWorkProps) {
       <main className="pt-20 px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-[1400px] mx-auto">
           <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-            {pdfUrl ? (
-              <iframe
-                src={pdfUrl}
-                className="w-full h-[calc(100vh-160px)] min-h-[600px]"
-                title="Showcase Portfolio"
-              />
-            ) : (
-              <div className="flex items-center justify-center h-[calc(100vh-160px)] min-h-[600px]">
-                <div className="text-center">
-                  <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                  <p className="text-gray-400">Loading showcase...</p>
-                </div>
-              </div>
-            )}
+            <iframe
+              src={pdfUrl}
+              className="w-full h-[calc(100vh-160px)] min-h-[600px]"
+              title="Showcase Portfolio"
+            />
           </div>
         </div>
       </main>
