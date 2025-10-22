@@ -1,7 +1,11 @@
 import { ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export function Hero() {
+interface HeroProps {
+  onExploreClick?: () => void;
+}
+
+export function Hero({ onExploreClick }: HeroProps) {
   return (
     <section 
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
@@ -58,7 +62,7 @@ export function Hero() {
             size="lg" 
             className="border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black bg-black/50 px-8 py-4 rounded-lg transition-all duration-300"
             aria-describedby="explore-work-desc"
-            onClick={() => window.open('/showcase.pdf', '_blank')}
+            onClick={onExploreClick}
           >
             Explore Work
           </Button>
