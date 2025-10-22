@@ -6,7 +6,7 @@ interface ExploreWorkProps {
 }
 
 export function ExploreWork({ onBack }: ExploreWorkProps) {
-  const pdfUrl = 'https://example.com/showcase.pdf';
+  const pdfUrl = 'https://idealink.us/showcase/lumosonic.pdf';
 
   return (
     <div className="min-h-screen bg-black text-white">
