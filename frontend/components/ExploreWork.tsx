@@ -46,9 +46,4 @@ export function ExploreWork({ onBack }: ExploreWorkProps) {
       </div>
     </div>
   );
-}          </div>
-        </div>
-      </main>
-    </div>
-  );
 }
