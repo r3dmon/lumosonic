@@ -1,37 +1,35 @@
 # .github/workflows/merge-fix-pkg.yml
 
-name: Merge fix-pkg to main
+name: Merge fix-pkg to main and Bump Version
 
-# 1. TRIGGER: Run this workflow manually from the Actions tab
 on:
   workflow_dispatch:
 
-# 2. PERMISSIONS: Grant the GITHUB_TOKEN the necessary permissions
 permissions:
-  contents: write # Required to push the merge commit to the repository
+  contents: write # Required to push commits and the merge to the repository
 
 jobs:
-  merge-branch:
+  merge-and-bump:
     runs-on: ubuntu-latest
 
     steps:
-      # 3. CHECKOUT: Download the repository code, including all branches
+      # 1. CHECKOUT: Download the repository code
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           # Fetch all history for all branches and tags
           fetch-depth: 0
+          # Use the GITHUB_TOKEN so we can push later
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 4. TEST: (Optional but HIGHLY recommended) Run your test suite
-      # Replace this with your actual test command
+      # 2. TEST: Run your test suite
       - name: Run tests
         run: |
           echo "Running tests..."
           # Example: npm test
-          # Example: python -m pytest
-          # If this step fails, the workflow will stop and the merge will not happen.
+          # If this step fails, the workflow will stop.
 
-      # 5. MERGE: Perform the merge using the GitHub CLI
+      # 3. MERGE: Perform the merge using the GitHub CLI
       - name: Merge fix-pkg into main
         run: |
           # Configure Git user for the merge commit
@@ -39,11 +37,26 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           # Use the GitHub CLI to perform the merge
-          # --base: The target branch (main)
-          # --head: The source branch (fix-pkg)
-          # --merge: Create a merge commit
           gh repo merge --base main --head fix-pkg --merge
 
         env:
-          # This token is automatically created by GitHub Actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 4. BUMP VERSION: Update package.json and commit
+      - name: Bump version and commit
+        run: |
+          echo "Merged successfully. Now bumping version..."
+
+          # Check out the main branch to ensure we are working on it
+          git checkout main
+
+          # Use npm version to bump the patch version (e.g., 1.0.0 -> 1.0.1)
+          # This automatically updates package.json and package-lock.json
+          # and creates a git tag.
+          npm version patch -m "chore: Bump version to %s"
+
+          # Push the new commit AND the new tag to the remote repository
+          git push origin main --follow-tags
+
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
