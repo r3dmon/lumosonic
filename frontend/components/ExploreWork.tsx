@@ -1,5 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useEffect } from 'react';
 
 interface ExploreWorkProps {
   onBack: () => void;
@@ -8,10 +9,31 @@ interface ExploreWorkProps {
 export function ExploreWork({ onBack }: ExploreWorkProps) {
   const pdfUrl = 'https://idealink.us/showcase/lumosonic.pdf';
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // perform a client-side redirect to the PDF
+      window.location.href = pdfUrl;
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen bg-black text-white">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+        <h1 className="text-2xl font-light mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-200">
+          Redirecting to Showcase PDF
+        </h1>
+        <p className="text-gray-300 mb-4">
+          If you are not redirected automatically, click the link below to open the PDF.
+        </p>
+        <a
+          href={pdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-4 py-2 border border-cyan-400 text-cyan-400 rounded hover:bg-cyan-400 hover:text-black transition-all duration-200"
+        >
+          Open Showcase PDF
+        </a>
+        <div className="mt-6">
           <Button
             variant="outline"
             className="border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black bg-black/50 transition-all duration-300"
@@ -20,21 +42,11 @@ export function ExploreWork({ onBack }: ExploreWorkProps) {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
           </Button>
-          <h1 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-200">
-            Our Showcase
-          </h1>
         </div>
-      </header>
-
-      <main className="pt-20 px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-            <iframe
-              src={pdfUrl}
-              className="w-full h-[calc(100vh-160px)] min-h-[600px]"
-              title="Showcase Portfolio"
-            />
-          </div>
+      </div>
+    </div>
+  );
+}          </div>
         </div>
       </main>
     </div>
