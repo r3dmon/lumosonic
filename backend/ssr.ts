@@ -36,6 +36,7 @@ function generateHTML(path: string): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://idealink.us; connect-src 'self';">
   <title>Lumosonic - From Sound to Light</title>
   <meta name="description" content="Minimalist solutions. Maximum impact. Digital craftsmanship and excellence.">
   <meta property="og:title" content="Lumosonic - From Sound to Light">
