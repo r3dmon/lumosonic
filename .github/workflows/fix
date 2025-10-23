@@ -1,0 +1,49 @@
+# .github/workflows/merge-fix-pkg.yml
+
+name: Merge fix-pkg to main
+
+# 1. TRIGGER: Run this workflow manually from the Actions tab
+on:
+  workflow_dispatch:
+
+# 2. PERMISSIONS: Grant the GITHUB_TOKEN the necessary permissions
+permissions:
+  contents: write # Required to push the merge commit to the repository
+
+jobs:
+  merge-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 3. CHECKOUT: Download the repository code, including all branches
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch all history for all branches and tags
+          fetch-depth: 0
+
+      # 4. TEST: (Optional but HIGHLY recommended) Run your test suite
+      # Replace this with your actual test command
+      - name: Run tests
+        run: |
+          echo "Running tests..."
+          # Example: npm test
+          # Example: python -m pytest
+          # If this step fails, the workflow will stop and the merge will not happen.
+
+      # 5. MERGE: Perform the merge using the GitHub CLI
+      - name: Merge fix-pkg into main
+        run: |
+          # Configure Git user for the merge commit
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Use the GitHub CLI to perform the merge
+          # --base: The target branch (main)
+          # --head: The source branch (fix-pkg)
+          # --merge: Create a merge commit
+          gh repo merge --base main --head fix-pkg --merge
+
+        env:
+          # This token is automatically created by GitHub Actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
