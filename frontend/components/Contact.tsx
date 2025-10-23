@@ -30,10 +30,13 @@ export function Contact() {
       setStatusMessage(response.message);
       e.currentTarget.reset();
       setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting contact form:', error);
       setSubmitStatus('error');
-      setStatusMessage('Failed to send message. Please try again.');
+      
+      const errorMessage = error?.message || 'Failed to send message. Please try again or email us directly at info@lumosonic.nl';
+      setStatusMessage(errorMessage);
+      
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
       setIsSubmitting(false);
