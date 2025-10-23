@@ -10,6 +10,8 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'explore'>('home');
 
   useEffect(() => {
+    document.documentElement.classList.add('dark');
+    
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
       metaThemeColor.setAttribute('content', '#000000');
