@@ -25,7 +25,7 @@ export function Contact() {
     };
 
     try {
-      const response = await backend.web.submit(data);
+      const response = await backend.contact.submit(data);
       setSubmitStatus('success');
       setStatusMessage(response.message);
       e.currentTarget.reset();
