@@ -82,13 +82,13 @@ export interface ClientOptions {
 /**
  * Import the endpoint handlers to derive the types for the client.
  */
-import { submit as api_web_contact_submit } from "~backend/backend/contact";
 import { getPDF as api_web_showcase_getPDF } from "~backend/backend/showcase";
 import { renderPage as api_web_ssr_renderPage } from "~backend/backend/ssr";
 import {
     serveIndex as api_web_static_serveIndex,
     serveStatic as api_web_static_serveStatic
 } from "~backend/backend/static";
+import { submit as api_web_submit_submit } from "~backend/backend/submit";
 
 export namespace web {
 
@@ -137,10 +137,10 @@ export namespace web {
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_web_static_serveStatic>
         }
 
-        public async submit(params: RequestType<typeof api_web_contact_submit>): Promise<ResponseType<typeof api_web_contact_submit>> {
+        public async submit(params: RequestType<typeof api_web_submit_submit>): Promise<ResponseType<typeof api_web_submit_submit>> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI(`/api/contact`, {method: "POST", body: JSON.stringify(params)})
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_web_contact_submit>
+            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_web_submit_submit>
         }
     }
 }
