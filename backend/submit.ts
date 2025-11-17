@@ -1,5 +1,6 @@
 import { api, APIError } from "encore.dev/api";
 import { secret } from "encore.dev/config";
+import { Resend } from "resend";
 
 const resendApiKey = secret("ResendAPIKey");
 
@@ -25,39 +26,32 @@ export const submit = api<ContactFormParams, ContactFormResponse>(
     }
 
     try {
-      const response = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "onboarding@resend.dev",
-          to: "info@lumosonic.nl",
-          subject: `New Contact Form Submission from ${params.firstName} ${params.lastName}`,
-          html: `
-            <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${params.firstName} ${params.lastName}</p>
-            <p><strong>Email:</strong> ${params.email}</p>
-            ${params.company ? `<p><strong>Company:</strong> ${params.company}</p>` : ""}
-            <p><strong>Message:</strong></p>
-            <p>${params.message.replace(/\n/g, "<br>")}</p>
-          `,
-        }),
+      const resend = new Resend(apiKey);
+
+      const { data, error } = await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: "info@lumosonic.nl",
+        subject: `New Contact Form Submission from ${params.firstName} ${params.lastName}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${params.firstName} ${params.lastName}</p>
+          <p><strong>Email:</strong> ${params.email}</p>
+          ${params.company ? `<p><strong>Company:</strong> ${params.company}</p>` : ""}
+          <p><strong>Message:</strong></p>
+          <p>${params.message.replace(/\n/g, "<br>")}</p>
+        `,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: "Unknown error" }));
-        console.error("Resend API error:", errorData);
+      if (error) {
+        console.error("Resend API error:", error);
         
-        if (response.status === 401 || response.status === 403) {
+        if (error.message?.includes("authentication") || error.message?.includes("API key")) {
           throw APIError.unavailable("Email service authentication failed. Please contact support.");
         }
         
         throw APIError.internal("Failed to send email. Please try again or contact us directly.");
       }
 
-      const data = await response.json();
       console.log("Email sent successfully:", data);
 
       return {
