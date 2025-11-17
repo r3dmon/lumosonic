@@ -30,7 +30,7 @@ export const submit = api<ContactFormParams, ContactFormResponse>(
 
       const { data, error } = await resend.emails.send({
         from: "onboarding@resend.dev",
-        to: "info@lumosonic.nl",
+        to: "r3daemonsub@gmail.com",
         subject: `New Contact Form Submission from ${params.firstName} ${params.lastName}`,
         html: `
           <h2>New Contact Form Submission</h2>
