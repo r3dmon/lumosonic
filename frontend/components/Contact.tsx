@@ -15,7 +15,8 @@ export function Contact() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
     
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const data = {
       firstName: formData.get('firstName') as string,
       lastName: formData.get('lastName') as string,
@@ -28,7 +29,7 @@ export function Contact() {
       const response = await backend.web.submit(data);
       setSubmitStatus('success');
       setStatusMessage(response.message);
-      e.currentTarget.reset();
+      form.reset();
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch (error: any) {
       console.error('Error submitting contact form:', error);
