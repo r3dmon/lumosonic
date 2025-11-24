@@ -51,11 +51,9 @@ export function Footer() {
           <p className="text-gray-500 font-light text-sm">
             &copy; 2024 Lumosonic. Minimal by design.
           </p>
-          {import.meta.env.VITE_COMMIT_HASH && (
-            <p className="text-gray-600 font-light text-xs mt-2">
-              v{import.meta.env.VITE_COMMIT_HASH.slice(0, 7)}
-            </p>
-          )}
+          <p className="text-gray-600 font-light text-xs mt-2">
+            v1.0.0
+          </p>
         </div>
       </div>
     </footer>
