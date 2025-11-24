@@ -3,7 +3,7 @@ import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import backend from '../backend-client';
+import { Resend } from 'resend';
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,18 +26,34 @@ export function Contact() {
     };
 
     try {
-      const response = await backend.web.submit(data);
+      const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+
+      const { error } = await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: 'r3daemonsub@gmail.com',
+        subject: `New Contact Form Submission from ${data.firstName} ${data.lastName}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          ${data.company ? `<p><strong>Company:</strong> ${data.company}</p>` : ''}
+          <p><strong>Message:</strong></p>
+          <p>${data.message.replace(/\n/g, '<br>')}</p>
+        `,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
       setSubmitStatus('success');
-      setStatusMessage(response.message);
+      setStatusMessage('Thank you for reaching out. We\'ll get back to you soon!');
       form.reset();
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch (error: any) {
       console.error('Error submitting contact form:', error);
       setSubmitStatus('error');
-      
-      const errorMessage = error?.message || 'Failed to send message. Please try again or email us directly at info@lumosonic.nl';
-      setStatusMessage(errorMessage);
-      
+      setStatusMessage(error?.message || 'Failed to send message. Please try again or email us directly at info@lumosonic.nl');
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
       setIsSubmitting(false);
