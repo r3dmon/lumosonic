@@ -1,3 +1,4 @@
+// Footer component - displays version hash from VITE_COMMIT_HASH environment variable
 export function Footer() {
   return (
     <footer 
