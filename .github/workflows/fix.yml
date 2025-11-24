@@ -1,62 +1,62 @@
-# .github/workflows/merge-fix-pkg.yml
+# # .github/workflows/merge-fix-pkg.yml
 
-name: Merge fix-pkg to main and Bump Version
+# name: Merge fix-pkg to main and Bump Version
 
-on:
-  workflow_dispatch:
+# on:
+#   workflow_dispatch:
 
-permissions:
-  contents: write # Required to push commits and the merge to the repository
+# permissions:
+#   contents: write # Required to push commits and the merge to the repository
 
-jobs:
-  merge-and-bump:
-    runs-on: ubuntu-latest
+# jobs:
+#   merge-and-bump:
+#     runs-on: ubuntu-latest
 
-    steps:
-      # 1. CHECKOUT: Download the repository code
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          # Fetch all history for all branches and tags
-          fetch-depth: 0
-          # Use the GITHUB_TOKEN so we can push later
-          token: ${{ secrets.GITHUB_TOKEN }}
+#     steps:
+#       # 1. CHECKOUT: Download the repository code
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+#         with:
+#           # Fetch all history for all branches and tags
+#           fetch-depth: 0
+#           # Use the GITHUB_TOKEN so we can push later
+#           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. TEST: Run your test suite
-      - name: Run tests
-        run: |
-          echo "Running tests..."
-          # Example: npm test
-          # If this step fails, the workflow will stop.
+#       # 2. TEST: Run your test suite
+#       - name: Run tests
+#         run: |
+#           echo "Running tests..."
+#           # Example: npm test
+#           # If this step fails, the workflow will stop.
 
-      # 3. MERGE: Perform the merge using the GitHub CLI
-      - name: Merge fix-pkg into main
-        run: |
-          # Configure Git user for the merge commit
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+#       # 3. MERGE: Perform the merge using the GitHub CLI
+#       - name: Merge fix-pkg into main
+#         run: |
+#           # Configure Git user for the merge commit
+#           git config --global user.name "github-actions[bot]"
+#           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Use the GitHub CLI to perform the merge
-          gh repo merge --base main --head fix-pkg --merge
+#           # Use the GitHub CLI to perform the merge
+#           gh repo merge --base main --head fix-pkg --merge
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 4. BUMP VERSION: Update package.json and commit
-      - name: Bump version and commit
-        run: |
-          echo "Merged successfully. Now bumping version..."
+#       # 4. BUMP VERSION: Update package.json and commit
+#       - name: Bump version and commit
+#         run: |
+#           echo "Merged successfully. Now bumping version..."
 
-          # Check out the main branch to ensure we are working on it
-          git checkout main
+#           # Check out the main branch to ensure we are working on it
+#           git checkout main
 
-          # Use npm version to bump the patch version (e.g., 1.0.0 -> 1.0.1)
-          # This automatically updates package.json and package-lock.json
-          # and creates a git tag.
-          npm version patch -m "chore: Bump version to %s"
+#           # Use npm version to bump the patch version (e.g., 1.0.0 -> 1.0.1)
+#           # This automatically updates package.json and package-lock.json
+#           # and creates a git tag.
+#           npm version patch -m "chore: Bump version to %s"
 
-          # Push the new commit AND the new tag to the remote repository
-          git push origin main --follow-tags
+#           # Push the new commit AND the new tag to the remote repository
+#           git push origin main --follow-tags
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
