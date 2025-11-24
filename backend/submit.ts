@@ -2,7 +2,7 @@ import { api, APIError } from "encore.dev/api";
 import { secret } from "encore.dev/config";
 import { Resend } from "resend";
 
-const resendApiKey = secret("ResendAPIKey");
+const resendApiKey = re_89K4V6uR_96kcdMGA7sVw1QDhyPuHWNcF;
 
 interface ContactFormParams {
   firstName: string;
