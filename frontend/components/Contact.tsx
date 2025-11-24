@@ -3,7 +3,7 @@ import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import backend from '~backend/client';
+import backend from '../backend-client';
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
